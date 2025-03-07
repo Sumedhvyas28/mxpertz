@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "137383416740",
+    "project_id": "mxpertz-d43ee",
+    "storage_bucket": "mxpertz-d43ee.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137383416740:android:0b0c9f262edad85202e731",
+        "android_client_info": {
+          "package_name": "com.example.mxpertz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUYAFJjPGt5PIX-BcbsIyTte_AaO-ngRQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
