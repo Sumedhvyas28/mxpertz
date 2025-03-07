@@ -1,12 +1,7 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mxpertz/auth/otp_page.dart';
 import 'package:mxpertz/auth/sign_up.dart';
-import 'package:mxpertz/component/round_button.dart';
-import 'package:mxpertz/component/text_button.dart';
-import 'package:mxpertz/component/utils.dart';
-import 'package:mxpertz/home_page.dart';
+import 'package:mxpertz/component/pallete.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,129 +11,162 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _isPasswordHidden = true;
-  bool loading = false;
-
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final _auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
-  final _formKey = GlobalKey<FormState>();
+  final TextEditingController phoneController = TextEditingController();
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    phoneController.dispose();
     super.dispose();
-  }
-
-  void login() {
-    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      utils().toastMessage('Email or Password cannot be empty');
-      return;
-    }
-
-    setState(() => loading = true);
-
-    Future<void> updateLastLogin(User user) async {
-      final userRef = _firestore.collection('users').doc(user.uid);
-
-      await userRef.update({
-        'lastLogin': DateTime.now().toIso8601String(),
-      }).catchError((error) {
-        print('Error updating last login: $error');
-      });
-    }
-
-    _auth.signInWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text.trim(),
-    ).then((value) async {
-      await updateLastLogin(value.user!);
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-    }).catchError((error) {
-      utils().toastMessage(error.toString());
-    }).whenComplete(() => setState(() => loading = false));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      backgroundColor: Colors.white,
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
-              // FireSync Title
-              const Text(
-                'FireSync',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.deepPurple,
-                  letterSpacing: 1.5,
+              // Close Button (Top Right)
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.close, size: 28),
+                  onPressed: () => Navigator.pop(context),
                 ),
-              ),
-              const SizedBox(height: 20),
-
-              // Email Input
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  hintText: 'Enter your Email',
-                  prefixIcon: const Icon(Icons.email),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 15),
-
-              // Password Input
-              TextField(
-                controller: passwordController,
-                obscureText: _isPasswordHidden,
-                decoration: InputDecoration(
-                  hintText: 'Enter your Password',
-                  prefixIcon: const Icon(Icons.lock),
-                  suffixIcon: IconButton(
-                    icon: Icon(_isPasswordHidden ? Icons.visibility_off : Icons.visibility),
-                    onPressed: () => setState(() => _isPasswordHidden = !_isPasswordHidden),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Login Button
-              RoundButton(
-                title: 'Login',
-                loading: loading,
-                onTap: login,
-             
               ),
               const SizedBox(height: 10),
 
-              // Sign Up Button
-              TextButtons(
-                title: 'Sign Up',
-                loading: loading,
-                onTap: () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()),
+              // Logo
+              Center(
+                child: Image.asset(
+                  'assets/splash_logo.png', // Update with your logo path
+                  height: 80,
                 ),
-                color: Colors.deepPurpleAccent,
               ),
+              const SizedBox(height: 30),
+
+              // Welcome Back Text
+              const Text(
+                'Welcome Back!',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 5),
+              const Text(
+                'Login to continue',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+              const SizedBox(height: 30),
+
+              // Phone Number Input
+              TextField(
+                controller: phoneController,
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  hintText: 'Phone Number',
+                  prefixIcon: const Icon(Icons.phone),
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // GET OTP Button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                        Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => OtpPage()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Pallete.mainBtnColor,
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30), // Rounded like in image
+                    ),
+                  ),
+                  child: const Text(
+                    'GET OTP',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+
+              // Or Continue With
+              const Text(
+                'Or Continue With',
+                style: TextStyle(fontSize: 14, color: Colors.grey),
+              ),
+              const SizedBox(height: 20),
+
+              // Social Login Buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildSocialButton('assets/Google.png', 'Google'),
+                  const SizedBox(width: 15),
+                  _buildSocialButton('assets/facebook.png', 'Facebook'),
+                ],
+              ),
+              const Spacer(),
+
+              // Sign Up Link
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Don't have an account? "),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const SignUpPage()),
+                    ),
+                    child: const Text(
+                      'SIGN UP',
+                      style: TextStyle(
+                        color: Colors.teal,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30), // Extra spacing at the bottom
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildSocialButton(String imagePath, String label) {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+        backgroundColor: Colors.white,
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: const BorderSide(color: Colors.grey),
+        ),
+      ),
+      child: Row(
+        children: [
+          Image.asset(imagePath, height: 24), // Update with actual asset path
+          const SizedBox(width: 8),
+          Text(label, style: const TextStyle(color: Colors.black)),
+        ],
       ),
     );
   }

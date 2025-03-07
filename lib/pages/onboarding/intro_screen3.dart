@@ -17,7 +17,7 @@ class IntroPage3 extends StatelessWidget {
             left: 0,
             right: 0,
             child: Image.asset(
-              'assets/new1.png',
+              'assets/new3.png',
               height: 380,
             ),
           ),
@@ -41,7 +41,7 @@ class IntroPage3 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Text(
-                    'ONLINE PAYMENT',
+                    'HOME DELIVER SERVICE',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,

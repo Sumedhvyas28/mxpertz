@@ -39,6 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
 
          // Bottom Navigation Controls
+          // Bottom Navigation Controls
 Positioned(
   bottom: 30,
   left: 20,
@@ -46,31 +47,36 @@ Positioned(
   child: Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      // SKIP Button
-      GestureDetector(
-        onTap: () {
-          if (currentPageIndex == 0) {
-            _controller.jumpToPage(2);
-          } else {
-            _controller.previousPage(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-            );
-          }
-        },
+      // Empty space to push "Skip" to center
+      const SizedBox(width: 50), 
+
+      // SKIP Button (Centered)
+      Expanded(
         child: Center(
-          child: Text(
-            currentPageIndex == 0 ? 'Skip >>' : 'Back',
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFFFFA500), // Orange color
+          child: GestureDetector(
+            onTap: () {
+              if (currentPageIndex == 0) {
+                _controller.jumpToPage(2);
+              } else {
+                _controller.previousPage(
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut,
+                );
+              }
+            },
+            child: const Text(
+              'Skip >>',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFFFFA500), // Orange color
+              ),
             ),
           ),
         ),
       ),
 
-      // NEXT Button as Circular Icon
+      // NEXT Button as Circular Icon (Right Side)
       GestureDetector(
         onTap: () {
           if (onLastPage) {
@@ -109,6 +115,7 @@ Positioned(
     ],
   ),
 ),
+
 
         ],
       ),
