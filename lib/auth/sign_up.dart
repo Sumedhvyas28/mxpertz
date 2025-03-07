@@ -52,10 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } catch (e) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+     
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Error: $e")),
       );

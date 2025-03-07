@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mxpertz/pages/widgets/logout_page.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,6 +11,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedCategoryIndex = 0; // Track selected category
+  final PageController _pageController = PageController();
+
 
   final List<String> _categories = [
     "Recommend",
@@ -56,13 +60,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white ,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context, MaterialPageRoute(builder: (context) => LogoutPage()));
+          },
         ),
         title: Center(
           child: Image.asset("assets/splash_logo.png", height: 40),
@@ -95,17 +102,54 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Banner Image
-              Container(
-                height: 150,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: const DecorationImage(
-                    image: AssetImage("assets/shopping.png"),
-                    fit: BoxFit.cover,
-                  ),
+
+
+SizedBox(
+  height: 170, // Increased height to accommodate indicator
+  child: Column(
+    children: [
+      Expanded(
+        child: PageView(
+          controller: _pageController,
+          children: [
+            Container(
+              height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: const DecorationImage(
+                  image: AssetImage("assets/shopping.png"),
+                  fit: BoxFit.cover,
                 ),
               ),
+            ),
+            Container(
+              height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: const DecorationImage(
+                  image: AssetImage("assets/shopping.png"), // Add another image
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 8), // Space between image and indicator
+      SmoothPageIndicator(
+        controller: _pageController,
+        count: 2, // Number of pages
+        effect: WormEffect(
+          dotHeight: 8,
+          dotWidth: 8,
+          activeDotColor: Colors.orange,
+          dotColor: Colors.grey.shade300,
+        ),
+      ),
+    ],
+  ),
+),
+
               const SizedBox(height: 16),
 
               // Category Tabs
@@ -228,11 +272,10 @@ class _HomeScreenState extends State<HomeScreen> {
           Center(
             child: Image.asset(
               product["image"],
-              height: MediaQuery.of(context).size.width * 0.3,
-              fit: BoxFit.contain,
+              height: MediaQuery.of(context).size.width * 0.2,
+              fit: BoxFit.fill,
             ),
           ),
-          const SizedBox(height: 10),
           Text(
             product["name"],
             style: TextStyle(

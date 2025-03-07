@@ -68,32 +68,37 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   // Function to handle Google Sign-In
-  Future<void> signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) return; // User canceled sign-in
+Future<void> signInWithGoogle() async {
+  try {
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      clientId: "137383416740-7qleed14ickkvl1a8ugeiauf7n85vcs4.apps.googleusercontent.com",  // Ensure this is the correct Web Client ID
+    );
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    if (googleUser == null) return; // User canceled sign-in
 
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-      await _auth.signInWithCredential(credential);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Google Sign-In Successful")),
-      );
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
 
-      Navigator.pushReplacementNamed(context, "/home");
-    } catch (e) {
-      print(e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        
-        SnackBar(content: Text("Google Sign-In Failed: $e")),
-      );
-    }
+    await FirebaseAuth.instance.signInWithCredential(credential);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Google Sign-In Successful")),
+    );
+
+    Navigator.pushReplacementNamed(context, "/home");
+  } catch (e) {
+    print("Google Sign-In Error: $e");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Google Sign-In Failed: $e")),
+    );
   }
+}
+
 
   @override
   Widget build(BuildContext context) {

@@ -12,7 +12,12 @@
           "package_name": "com.example.mxpertz"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "137383416740-7qleed14ickkvl1a8ugeiauf7n85vcs4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDUYAFJjPGt5PIX-BcbsIyTte_AaO-ngRQ"
@@ -20,7 +25,63 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137383416740-6tdtit96fed1nca5ep3nbshgaei60hs9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "137383416740-1vnlqab6sqpco7h8i7u8ob7dn7ejnpus.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mxpertz"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137383416740:android:6ad4e861eeafed6302e731",
+        "android_client_info": {
+          "package_name": "com.mxpertz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137383416740-trj2bp4bjd8l5b3p02r1ekv6246edn28.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mxpertz",
+            "certificate_hash": "538a92cc09e05c8d2609b3c5f40e60082e13f8b1"
+          }
+        },
+        {
+          "client_id": "137383416740-7qleed14ickkvl1a8ugeiauf7n85vcs4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUYAFJjPGt5PIX-BcbsIyTte_AaO-ngRQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137383416740-6tdtit96fed1nca5ep3nbshgaei60hs9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "137383416740-1vnlqab6sqpco7h8i7u8ob7dn7ejnpus.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mxpertz"
+              }
+            }
+          ]
         }
       }
     }
